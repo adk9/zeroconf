@@ -59,16 +59,6 @@ func Register(instance, service, domain string, port int, text []string, ifaces 
 		ifaces = listMulticastInterfaces()
 	}
 
-	for _, iface := range ifaces {
-		v4, v6 := addrsForInterface(&iface)
-		entry.AddrIPv4 = append(entry.AddrIPv4, v4...)
-		entry.AddrIPv6 = append(entry.AddrIPv6, v6...)
-	}
-
-	if entry.AddrIPv4 == nil && entry.AddrIPv6 == nil {
-		return nil, fmt.Errorf("Could not determine host IP addresses")
-	}
-
 	s, err := newServer(ifaces)
 	if err != nil {
 		return nil, err
